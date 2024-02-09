@@ -1,0 +1,25 @@
+/* CurrencySelector.css */
+
+.currency-dropdown {
+    background-color: purple;
+    color: white;
+    padding: 8px;
+    border: none;
+    cursor: pointer;
+}
+
+.currency-dropdown:hover {
+    background-color: purple;
+    color: white;
+}
+
+.currency-dropdown:after {
+    content: '\25BC';
+    font-size: 1em;
+    margin-left: 5px;
+}
+
+.currency-dropdown option:first-child:before {
+    content: 'Currency';
+    color: white;
+}
