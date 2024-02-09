@@ -1,5 +1,5 @@
 // App.js
-import React from 'react';
+import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { AppProvider } from './context/AppContext';
@@ -11,16 +11,22 @@ import RemainingBudget from './components/Remaining';
 import CurrencySelector from './components/CurrencySelector';
 
 const App = () => {
+    const [selectedCurrency, setSelectedCurrency] = useState('£');
+
+    // eslint-disbale-next-line
+    const handleCurrencyChange = (event) => {
+        setSelectedCurrency(event.target.value);
+    }
     return (
         <AppProvider>
             <div className='container'>
                 <h1 className='mt-3'>Company's Budget Allocation</h1>
                 <div className='row mt-3'>
                     <div className='col-sm'>
-                        <CurrencySelector />
+                        <CurrencySelector selectedCurrency={selectedCurrency} handleCurrencyChange={handleCurrencyChange} className="currency-prefix" />
                     </div>
                     <div className='col-sm'>
-                        <Budget />
+                        <Budget selectedCurrency={selectedCurrency} />
                     </div>
                     <div className='col-sm'>
                         <RemainingBudget />
