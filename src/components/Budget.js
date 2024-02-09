@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { AppContext } from '../../../Company-Budget/src/context/AppContext';
+import { AppContext } from '../context/AppContext';
 import './Budget.css';
 import CurrencySelector from './CurrencySelector';
 
