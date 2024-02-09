@@ -4,7 +4,7 @@ import './Budget.css';
 
 const Budget = ({ selectedCurrency }) => {
     const { budget, expenses } = useContext(AppContext);
-    const [newBudget, setNewBudget] = useState(budget);
+    const [newBudget, setNewBudget] = useState(null);
     const [error, setError] = useState(null);
 
     const totalExpenses = expenses.reduce((total, item) => total + item.cost, 0);
@@ -12,7 +12,19 @@ const Budget = ({ selectedCurrency }) => {
     const handleBudgetChange = (event) => {
         const inputValue = event.target.value.trim();
         const inputBudget = parseFloat(inputValue);
-        const remainingBudget = budget - totalExpenses;
+
+        if (inputValue === '') {
+            setNewBudget(null);
+            setError(null);
+            return;
+        }
+
+        let remainingBudget;
+        if (newBudget !== null) {
+            remainingBudget = budget - totalExpenses;
+        } else {
+            remainingBudget = budget;
+        }
 
         setNewBudget(inputBudget);
 
@@ -38,9 +50,9 @@ const Budget = ({ selectedCurrency }) => {
                         Budget:
                         <input
                             type="number"
-                            value={newBudget === '' ? '' : `${selectedCurrency} ${newBudget}`}
+                            value={newBudget === null ? '' : `${selectedCurrency} ${newBudget}`}
                             onChange={handleBudgetChange}
-                            placeholder= {"Enter a Number"}
+                            placeholder= "Enter a Number"
                             step={10}
                         />
                     </label>
