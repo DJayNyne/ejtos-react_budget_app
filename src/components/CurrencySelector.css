@@ -23,3 +23,10 @@
     content: 'Currency';
     color: white;
 }
+
+.currency-prefix {
+    color: green;
+    margin-top: 20px;
+    justify-content: center;
+
+}
