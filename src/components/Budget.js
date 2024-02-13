@@ -3,11 +3,16 @@ import { AppContext } from '../context/AppContext';
 import './Budget.css';
 
 const Budget = ({ selectedCurrency }) => {
-    const { budget, expenses } = useContext(AppContext);
-    const [newBudget, setNewBudget] = useState(null);
-    const [error, setError] = useState(null);
-
+    const { budget, expenses, dispatch } = useContext(AppContext);
     const totalExpenses = expenses.reduce((total, item) => total + item.cost, 0);
+    
+    const handleFormSubmit = (event) => {
+        event.preventDefault();
+    }
+
+    const initialBudgetValue = Math.max(2000, budget - totalExpenses);
+    const [newBudget, setNewBudget] = useState(initialBudgetValue);
+    const [error, setError] = useState(null);
 
     const handleBudgetChange = (event) => {
         const inputValue = event.target.value.trim();
@@ -19,16 +24,11 @@ const Budget = ({ selectedCurrency }) => {
             return;
         }
 
-        let remainingBudget;
-        if (newBudget !== null) {
-            remainingBudget = budget - totalExpenses;
-        } else {
-            remainingBudget = budget;
-        }
+        let remainingBudget = budget - totalExpenses;
 
         setNewBudget(inputBudget);
 
-        if (inputValue === '' || (!isNaN(inputBudget) && inputBudget <= 20000.01 && inputBudget >= remainingBudget)) {
+        if (!isNaN(inputBudget) && inputBudget <= 20000.01 && inputBudget >= remainingBudget) {
             setError(null);
         } else if (inputBudget > 20000.01) {
             setError("Budget cannot exceed 20,000");
@@ -37,12 +37,17 @@ const Budget = ({ selectedCurrency }) => {
         } else {
             setError("Invalid input");
         }
+        
+        dispatch({
+            type: 'UPDATE_BUDGET',
+            payload: inputBudget,
+        });
     };
 
     return (
         <div>
             <div className='alert alert-secondary'>
-                <form className="budget-form">
+                <form className="budget-form" onSubmit={handleFormSubmit}>
                     <div className={`currency-prefix ${selectedCurrency.toLowerCase()}-prefix`}>
                         {selectedCurrency}
                     </div>
@@ -50,7 +55,7 @@ const Budget = ({ selectedCurrency }) => {
                         Budget:
                         <input
                             type="number"
-                            value={newBudget === null ? '' : `${selectedCurrency} ${newBudget}`}
+                            value={newBudget === null ? '' : newBudget}
                             onChange={handleBudgetChange}
                             placeholder= "Enter a Number"
                             step={10}
