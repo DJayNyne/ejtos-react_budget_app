@@ -1,4 +1,3 @@
-// App.js
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -29,22 +28,22 @@ const App = () => {
                         <Budget selectedCurrency={selectedCurrency} />
                     </div>
                     <div className='col-sm'>
-                        <RemainingBudget />
+                        <RemainingBudget selectedCurrency={selectedCurrency} />
                     </div>
                     <div className='col-sm'>
-                        <ExpenseTotal />
+                        <ExpenseTotal selectedCurrency={selectedCurrency} />
                     </div>
                 </div>
                 <h3 className='mt-3'>Allocation</h3>
                 <div className='row '>
                     <div className='col-sm'>
-                        <ExpenseList />
+                        <ExpenseList selectedCurrency={selectedCurrency} />
                     </div>
                 </div>
                 <h3 className='mt-3'>Change allocation</h3>
                 <div className='row mt-3'>
                     <div className='col-sm'>
-                        <AllocationForm />
+                        <AllocationForm selectedCurrency={selectedCurrency} />
                     </div>
                 </div>
             </div>
