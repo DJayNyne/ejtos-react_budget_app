@@ -23,6 +23,7 @@ export const AppReducer = (state, action) => {
                 });
                 return {
                     ...state,
+                    expenses: [...state.expenses, action.payload]
                 };
             } else {
                 alert("Cannot increase the allocation! Out of funds");
@@ -69,9 +70,15 @@ export const AppReducer = (state, action) => {
             state.currency = action.payload;
             return {
                 ...state
-            }
+            }    
+            case 'UPDATE_BUDGET':
+                console.log("Updating budget to:", action.payload);
+                return{
+                    ...state,
+                    budget: action.payload,
+                }
 
-        default:
+            default:
             return state;
     }
 };
@@ -86,7 +93,6 @@ const initialState = {
         { id: "Human Resource", name: 'Human Resource', cost: 40 },
         { id: "IT", name: 'IT', cost: 500 },
     ],
-    currency: '£'
 };
 
 // 2. Creates the context this is the thing our components import and use to get the state
